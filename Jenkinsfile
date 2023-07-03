@@ -4,14 +4,11 @@ pipeline {
     stages {
         stage('Build') {
             when {
-                expression {
-                    return env.CHANGE_BRANCH == 'main' && env.CHANGE_TARGET == 'merge'
-                }
+                changeset "origin/main"
             }
             steps {
                 // Perform build steps here
                 sh 'echo "Building..."'
-                echo "build successful"
             }
         }
 

@@ -11,7 +11,6 @@ pipeline {
             steps {
                 // Perform build steps here
                 sh 'echo "Building..."'
-                echo "build successful"
             }
         }
 

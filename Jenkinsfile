@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Build') {
             when {
-                changeset "origin/main"
+                expression {
+                    return env.BRANCH_NAME == 'main' && env.CHANGE_ID != null
+                }
             }
             steps {
                 // Perform build steps here

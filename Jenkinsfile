@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             when {
-                expression {
-                    return env.CHANGE_BRANCH == 'main' && env.CHANGE_TARGET == 'merge'
-                }
+                changeset "origin/main"
             }
             steps {
                 // Perform build steps here

@@ -18,6 +18,7 @@ pipeline {
             steps {
                 // Perform deployment steps here
                 sh 'echo "Deploying..."'
+                sh 'env'
             }
         }
     }

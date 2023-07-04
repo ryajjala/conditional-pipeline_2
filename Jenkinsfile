@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             when {
-                expression {
-                    return env.BRANCH_NAME == 'main' && env.CHANGE_ID != null
-                }
+                branch 'main'
             }
             steps {
                 // Perform build steps here

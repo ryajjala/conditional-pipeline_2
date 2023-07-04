@@ -11,6 +11,7 @@ pipeline {
             steps {
                 // Perform build steps here
                 sh 'echo "Building..."'
+                sh "env"
             }
         }
 

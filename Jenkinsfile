@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Build') {
             when {
-                branch 'main'
+                expression {
+                    return env.GIT_BRANCH == 'origin/main'
+                }
             }
             steps {
                 // Perform build steps here

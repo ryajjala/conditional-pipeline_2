@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             when {
                 expression {
-                    return env.GIT_BRANCH == 'origin/main' && env.CHANGE_TARGET == 'merge'
+                    return env.GIT_BRANCH == 'main' && env.CHANGE_TARGET == 'merge'
                 }
             }
             steps {

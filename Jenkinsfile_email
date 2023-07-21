@@ -1,0 +1,47 @@
+import hudson.model.Cause
+
+def getJenkinsUserEmail() {
+    def userIdCause = currentBuild.rawBuild.getCause(Cause.UserIdCause)
+    if (userIdCause != null) {
+        def user = hudson.model.User.get(userIdCause.getUserId())
+        return user.getProperty(hudson.tasks.Mailer.UserProperty.class)?.address
+    }
+    return 'jenkins@example.com'
+}
+
+pipeline {
+    agent any
+    stages {
+        stage('build file') {
+            steps {
+                checkout scm
+                /*script {
+                    withCredentials([usernamePassword(credentialsId: 'GitHub', usernameVariable: 'GitUser', passwordVariable: 'GITHUB_TOKEN')]) {
+                        withEnv(["GITHUB_TOKEN=${env.GITHUB_TOKEN}"]) {
+                            sh "git config --global --add safe.directory ${env.WORKSPACE}"
+                            sh """
+                            git branch -a
+                            git checkout release
+                            git branch --show-current
+                            git branch -f live-release release
+                            npm init --yes
+                            npm install semantic-release @semantic-release/git
+                            npx semantic-release --branches origin\\/release --debug
+                            """
+                        }
+                    }
+                }*/
+                script {
+                    def gitUserEmail = getJenkinsUserEmail()
+
+                // Set Git username and email for the release
+                sh "git config user.name 'Jenkins'"
+                sh "echo '${gitUserEmail}'"
+
+                // Use semantic release or any other release process you prefer
+                // Example: sh 'npx semantic-release'
+                }
+            }
+        }
+    }
+}

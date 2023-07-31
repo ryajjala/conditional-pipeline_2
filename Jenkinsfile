@@ -1,13 +1,14 @@
 pipeline {
     agent any
-
+    when {
+        expression {
+            def payload = readJSON file: 'payload.json'
+            def action = payload.action
+            return action == 'review_requested'
+        }
+    }
     stages {
         stage('Build') {
-            when {
-                expression {
-                    return env.GIT_BRANCH == 'main' && env.CHANGE_TARGET == 'merge'
-                }
-            }
             steps {
                 // Perform build steps here
                 sh 'echo "Building..."'
